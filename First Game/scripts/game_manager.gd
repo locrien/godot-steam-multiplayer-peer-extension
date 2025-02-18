@@ -19,7 +19,7 @@ func become_host():
 	_remove_single_player()
 	%MultiplayerHUD.hide()
 	%SteamHUD.hide()
-	%NetworkManager.become_host()
+	%NetworkManager.become_host("RoomName", "CoOp")
 	
 func join_as_client():
 	print("Join as player 2")
@@ -104,19 +104,3 @@ func _remove_single_player():
 	
 	
 	
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
