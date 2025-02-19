@@ -10,7 +10,7 @@ func _ready():
 	if OS.has_feature("dedicated_server"):
 		print("Starting dedicated server...")
 		_remove_single_player()
-		%NetworkManager.become_host(true)
+		MultiplayerManager.become_host("","",true)
 
 func add_point():
 	score += 1
@@ -21,9 +21,9 @@ func become_host():
 	_remove_single_player()
 	%MultiplayerHUD.hide()
 	%SteamHUD.hide()
-	%NetworkManager.become_host("RoomName", "CoOp")
-	%NetworkManager.player_added.connect(_add_player_to_game)
-	%NetworkManager.player_removed.connect(_del_player)	
+	MultiplayerManager.become_host("RoomName", "CoOp")
+	MultiplayerManager.player_added.connect(_add_player_to_game)
+	MultiplayerManager.player_removed.connect(_del_player)	
 	
 func join_as_client():
 	print("Join as player 2")
@@ -35,18 +35,18 @@ func use_steam():
 	%SteamHUD.show()
 	SteamManager.initialize_steam()
 	Steam.lobby_match_list.connect(_on_lobby_match_list)
-	%NetworkManager.active_network_type = %NetworkManager.MULTIPLAYER_NETWORK_TYPE.STEAM
+	MultiplayerManager.active_network_type = MultiplayerManager.MULTIPLAYER_NETWORK_TYPE.STEAM
 
 func list_steam_lobbies():
 	print("List Steam lobbies")
-	%NetworkManager.list_lobbies()
+	MultiplayerManager.list_lobbies()
 
 func join_lobby(lobby_id = 0):
 	print("Joining lobby %s" % lobby_id)
 	_remove_single_player()
 	%MultiplayerHUD.hide()
 	%SteamHUD.hide()
-	%NetworkManager.join_as_client(lobby_id)
+	MultiplayerManager.join_as_client(lobby_id)
 
 func _on_lobby_match_list(lobbies: Array):
 	print("On lobby match list")
