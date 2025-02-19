@@ -2,8 +2,6 @@ extends Node
 
 enum MULTIPLAYER_NETWORK_TYPE { ENET, STEAM }
 
-@export var _players_spawn_node: Node2D
-
 signal player_added(id:int)
 signal player_removed(id:int)
 

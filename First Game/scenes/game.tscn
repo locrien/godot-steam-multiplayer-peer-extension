@@ -240,10 +240,9 @@ text = "You collected X coins."
 horizontal_alignment = 1
 autowrap_mode = 2
 
-[node name="NetworkManager" type="Node" parent="." node_paths=PackedStringArray("_players_spawn_node")]
+[node name="NetworkManager" type="Node" parent="."]
 unique_name_in_owner = true
 script = ExtResource("3_sp8dn")
-_players_spawn_node = NodePath("../Players")
 
 [node name="TileMap" type="Node2D" parent="."]
 
