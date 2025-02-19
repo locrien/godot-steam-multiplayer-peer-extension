@@ -1,6 +1,7 @@
 class_name NetworkType extends Node
 
-var _players_spawn_node:Node
+signal player_added(id:int)
+signal player_removed(id:int)
 
 func become_host(lobbyName:String, lobbyMode:String):
     assert(false, "missing implementation [become_host]")

@@ -223,9 +223,10 @@ size = Vector2(33, 83)
 
 [node name="Game" type="Node2D"]
 
-[node name="GameManager" type="Node" parent="."]
+[node name="GameManager" type="Node" parent="." node_paths=PackedStringArray("_players_spawn_node")]
 unique_name_in_owner = true
 script = ExtResource("1_l4ihi")
+_players_spawn_node = NodePath("../Players")
 
 [node name="ScoreLabel" type="Label" parent="GameManager"]
 offset_left = 513.0

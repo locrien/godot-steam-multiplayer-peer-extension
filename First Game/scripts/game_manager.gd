@@ -1,8 +1,10 @@
 extends Node
 
 var score = 0
+var multiplayer_scene = preload("res://scenes/multiplayer_player.tscn")
 
 @onready var score_label = $ScoreLabel
+@export var _players_spawn_node: Node2D
 
 func _ready():
 	if OS.has_feature("dedicated_server"):
@@ -20,6 +22,8 @@ func become_host():
 	%MultiplayerHUD.hide()
 	%SteamHUD.hide()
 	%NetworkManager.become_host("RoomName", "CoOp")
+	%NetworkManager.player_added.connect(_add_player_to_game)
+	%NetworkManager.player_removed.connect(_del_player)	
 	
 func join_as_client():
 	print("Join as player 2")
@@ -76,7 +80,20 @@ func _remove_single_player():
 	var player_to_remove = get_tree().get_current_scene().get_node("Player")
 	player_to_remove.queue_free()
 	
+func _add_player_to_game(id: int):
+	print("Player %s joined the game!" % id)
 	
+	var player_to_add = multiplayer_scene.instantiate()
+	player_to_add.player_id = id
+	player_to_add.name = str(id)
+	
+	_players_spawn_node.add_child(player_to_add, true)
+	
+func _del_player(id: int):
+	print("Player %s left the game!" % id)
+	if not _players_spawn_node.has_node(str(id)):
+		return
+	_players_spawn_node.get_node(str(id)).queue_free()
 	
 	
 	

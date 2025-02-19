@@ -1,6 +1,5 @@
 extends NetworkType
 
-var multiplayer_scene = preload("res://scenes/multiplayer_player.tscn")
 var multiplayer_peer: SteamMultiplayerPeer = SteamMultiplayerPeer.new()
 var _hosted_lobby_id = 0
 
@@ -13,8 +12,8 @@ func  _ready():
 func become_host(lobbyName: String, lobbyMode: String):
 	print("Starting host!")
 	
-	multiplayer.peer_connected.connect(_add_player_to_game)
-	multiplayer.peer_disconnected.connect(_del_player)
+	multiplayer.peer_connected.connect(player_added.emit)
+	multiplayer.peer_disconnected.connect(player_removed.emit)
 	
 	_lobbyName = lobbyName
 	_lobbyMode = lobbyMode
@@ -48,7 +47,7 @@ func _create_host():
 		multiplayer.set_multiplayer_peer(multiplayer_peer)
 		
 		if not OS.has_feature("dedicated_server"):
-			_add_player_to_game(1)
+			player_added.emit(1)
 	else:
 		print("error creating host: %s" % str(error))
 
@@ -90,18 +89,3 @@ func list_lobbies():
 	# Otherwise, it may not show up in the lobby list of your clients
 	Steam.addRequestLobbyListStringFilter("name", _lobbyName, Steam.LOBBY_COMPARISON_EQUAL)
 	Steam.requestLobbyList()
-
-func _add_player_to_game(id: int):
-	print("Player %s joined the game!" % id)
-	
-	var player_to_add = multiplayer_scene.instantiate()
-	player_to_add.player_id = id
-	player_to_add.name = str(id)
-	
-	_players_spawn_node.add_child(player_to_add, true)
-	
-func _del_player(id: int):
-	print("Player %s left the game!" % id)
-	if not _players_spawn_node.has_node(str(id)):
-		return
-	_players_spawn_node.get_node(str(id)).queue_free()
