@@ -1,4 +1,4 @@
-extends NetworkType
+class_name EnetNetwork extends NetworkType
 
 const SERVER_PORT = 8080
 const SERVER_IP = "127.0.0.1"
@@ -22,6 +22,9 @@ func join_as_client(_lobby_id):
 	
 	multiplayer_peer.create_client(SERVER_IP, SERVER_PORT)
 	multiplayer.multiplayer_peer = multiplayer_peer
+
+func list_lobbies():
+	print("No lobbies in enet mode")
 
 	
 	

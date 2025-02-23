@@ -9,9 +9,6 @@ signal player_added(id:int)
 signal player_removed(id:int)
 
 var active_network_type: MULTIPLAYER_NETWORK_TYPE = MULTIPLAYER_NETWORK_TYPE.ENET
-# @export var _enet_node: PackedScene
-var enet_network_scene := preload("res://addons/multiplayer/scenes/networks/enet_network.tscn")
-var steam_network_scene := preload("res://addons/multiplayer/scenes/networks/steam_network.tscn")
 var active_network:NetworkType
 
 func _build_multiplayer_network():
@@ -23,17 +20,16 @@ func _build_multiplayer_network():
 		match active_network_type:
 			MULTIPLAYER_NETWORK_TYPE.ENET:
 				print("Setting network type to ENet")
-				_set_active_network(enet_network_scene)
+				active_network = EnetNetwork.new()
+				active_network.name = "EnetNetwork"
+				add_child(active_network);
 			MULTIPLAYER_NETWORK_TYPE.STEAM:
 				print("Setting network type to Steam")
-				_set_active_network(steam_network_scene)
+				active_network = SteamNetwork.new()
+				active_network.name = "SteamNetwork"
+				add_child(active_network);
 			_:
 				print("No match for network type!")
-
-func _set_active_network(active_network_scene):
-	var network_scene_initialized = active_network_scene.instantiate()
-	active_network = network_scene_initialized
-	add_child(active_network)
 
 func become_host(lobbyName: String, lobbyMode: String, is_dedicated_server = false):
 	_build_multiplayer_network()

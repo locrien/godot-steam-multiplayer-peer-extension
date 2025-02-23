@@ -1,4 +1,4 @@
-extends NetworkType
+class_name SteamNetwork extends NetworkType
 
 var multiplayer_peer: SteamMultiplayerPeer = SteamMultiplayerPeer.new()
 var _hosted_lobby_id = 0

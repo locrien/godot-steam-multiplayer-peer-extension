@@ -253,6 +253,8 @@ tile_map_data = PackedByteArray("AAABAAMAAAAAAAAAAAACAAMAAAAAAAAAAAD//wUAAAAAAAA
 tile_set = SubResource("TileSet_wvtw0")
 
 [node name="Player" parent="." instance=ExtResource("1_rbmkf")]
+process_mode = 4
+visible = false
 position = Vector2(34, 37)
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
@@ -421,9 +423,16 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_bottom = -80.0
+offset_bottom = -60.0
 grow_horizontal = 2
 grow_vertical = 2
+
+[node name="LineEdit" type="LineEdit" parent="SteamHUD/Panel/Options"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("7_8cblx")
+theme_override_font_sizes/font_size = 8
+placeholder_text = "RoomName"
+max_length = 10
 
 [node name="HostP2PGame" type="Button" parent="SteamHUD/Panel/Options"]
 layout_mode = 2
@@ -442,8 +451,8 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = 37.0
-offset_bottom = -3.0
+offset_top = 60.0
+offset_bottom = -1.0
 grow_horizontal = 2
 grow_vertical = 2
 
